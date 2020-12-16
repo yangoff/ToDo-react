@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.div `
     width:100%;
     height:70px;
     background:#20295F;
     display:flex;
     border-bottom: 5px solid #ee6b26;
 `
-export const LeftSide = styled.div`
+export const LeftSide = styled.div `
     width:50%;
     height:70px;
     display: flex;
@@ -18,7 +18,7 @@ export const LeftSide = styled.div`
         height: 40px;
     }
 `
-export const RigthSide = styled.div`
+export const RigthSide = styled.div `
     width:50%;
     height:70 px;
     display: flex;
@@ -44,15 +44,15 @@ export const RigthSide = styled.div`
         span{
             background: white;
             color:#ee6b26;
-            padding: 3px 7px;
+            padding: 2px 7px;
             border-radius: 50%;
             position:relative;
             top:-20px;
             right: 10px;
         }
-
+        transition: all 0.3s ease;
         &:hover{
-            opacity:0.5;
+            opacity:0.8;
             
         }
     }

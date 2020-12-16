@@ -23,7 +23,7 @@ export const Container = styled.div`
         align-self:flex-end;
         font-size: 18px;
     }
-
+    transition: all 0.3s ease;
     &:hover{
         background: #ee6b26;
     }
