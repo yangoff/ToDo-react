@@ -23,7 +23,7 @@ export const TopCard = styled.div`
     align-items:center;
     flex-direction:column;
     img{
-        width:40%;
+        width:60px;
     }
 
 `

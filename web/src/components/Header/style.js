@@ -24,7 +24,13 @@ export const RigthSide = styled.div `
     display: flex;
     align-items: center;
     justify-content:flex-end;
-    a{
+    button{
+        background: none;
+        border:none;
+        cursor: pointer;
+        outline: none;
+    }
+    a, button{
         color:white;
         font-weight:bold;
         text-decoration:none;
@@ -34,6 +40,7 @@ export const RigthSide = styled.div `
             color:#ee6b26;
         }
     }
+    
 
     #notification{
         img {

@@ -5,7 +5,7 @@ import bell from "../../assets/bell.png";
 
 
 
-function Header() {
+function Header({lateCount, clickNotification}) {
     return (
         <S.Container>
 
@@ -20,10 +20,10 @@ function Header() {
               <span className="dividir"></span>
               <a href="#" >SINCRONIZAR CELULAR</a>
               <span className="dividir"></span>
-              <a href="#" id="notification" >
+              <button href="#" id="notification" onClick={clickNotification}>
                   <img src={bell} alt="Notificacao"></img>
-                  <span>5</span>
-              </a>
+                  <span>{lateCount}</span>
+              </button>
             </S.RigthSide>
 
         </S.Container>
