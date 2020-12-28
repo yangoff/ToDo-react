@@ -30,6 +30,7 @@ export const Content = styled.div`
         text-decoration:none;
         color:#000;
     }
+    margin-bottom: 70px;
 `
 
 export const Title = styled.div`

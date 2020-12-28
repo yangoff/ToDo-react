@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import * as S from './style';
-import {format} from 'date-fns';
+import {format, set} from 'date-fns';
+import {Redirect} from 'react-router-dom';
 
 //Api
 import api from '../../services/api';
+import isConnected from '../../utils/isConnected';
 
 
 //Start Components
@@ -18,7 +20,7 @@ import TypeIcons from '../../utils/typeIcons'
 
 function Task({match}) {
 
-    const [lateCount, setlateCount] = useState([]);
+    const [redirect,setRedirect] = useState(false);
     const [type,setType]= useState([]);
     const [id, setId] = useState([]);
     const [done, setDone] = useState(false);
@@ -26,15 +28,25 @@ function Task({match}) {
     const [description, setDescription] = useState([]);
     const [date, setDate] = useState([]);
     const [hour, setHour] = useState([]);
-    const [macaddress, setMacaddress] = useState('25:c1:75:e3:d3:1d');
+    
   
-  async function lateVerify(){
-    await api.get(`/task/filter/late/25:c1:75:e3:d3:1d`)
-    .then( response =>{
-      setlateCount(response.data.length);
-      console.log(response.data.length);
+  
+
+  async function Remove(){
+
+    const res = window.confirm('Deseja realmente remover a tarefa?');
+    if(res === true){
+      api.delete(`/task/${match.params.id}`)
+      .then(()=>{
+        alert("Removido com sucesso");
+        setRedirect(true);
+      });
       
-    })
+    }else{
+      alert("Operação cancelada")
+    }
+
+
   }
 
   async function LoadTaskDetails(){
@@ -42,6 +54,7 @@ function Task({match}) {
     .then(response=>{
       setType(response.data.type)
       setTitle(response.data.title)
+      setDone(response.data.done);
       setDescription(response.data.description)
       setDate(format(new Date(response.data.when),'yyyy-MM-dd'))
       setHour(format(new Date(response.data.when),'HH:mm'))
@@ -49,23 +62,51 @@ function Task({match}) {
   }
 
   async function Save(){
-      await api.post('/task',{
-        macaddress,
-        type,
-        title,
-        description,
-        when:`${date}T${hour}:00.000`
-      }).then(()=>alert('Tarefa cadastrada com sucesso!'));
+      if(title.length <=0)
+        return alert("Você precisa informar o título da tarefa")
+      else if(description.length <=0)
+        return alert("Você precisa informar o descrição da tarefa")
+      else if(type.length <=0)
+        return alert("Você precisa informar o tipo da tarefa")
+      else if(date.length <= 0)
+        return alert("Você precisa informar a data da tarefa")
+        
+      else if(hour.length <=0)
+        return alert("Você precisa informar a hora da tarefa")
+
+      
+      if(match.params.id){
+        await api.put(`/task/${match.params.id}`,{
+          macaddress: isConnected,
+          done,
+          type,
+          title,
+          description,
+          when:`${date}T${hour}:00.000`
+        }).then(()=>setRedirect(true));
+      }else{
+        await api.post('/task',{
+          macaddress: isConnected,
+          type,
+          title,
+          description,
+          when:`${date}T${hour}:00.000`
+        }).then(()=>setRedirect(true));
+      }
+      
   }
 
   useEffect(()=>{
-    lateVerify();
+    if(!isConnected){
+      setRedirect(true);
+    }
     LoadTaskDetails();
   },[]);
 
     return (
       <S.Container>
-        <Header lateCount={lateCount}/>
+        {redirect && <Redirect to="/"/>}
+        <Header />
           
         <S.Form>
             
@@ -111,7 +152,7 @@ function Task({match}) {
                     <span>CONCLUIDO</span>
                 </div>
 
-                <button type="button" >Excluir</button>
+                { match.params.id && <button type="button" onClick={Remove}>Excluir</button>}
             </S.Options>
 
             <S.Input>

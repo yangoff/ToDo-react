@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+    opacity:${props => props.done ? 0.5 : 1};
     width:225px;
     height:160px;
     display:flex;
@@ -12,6 +13,7 @@ export const Container = styled.div`
     margin:20px;
     cursor: pointer;
     transition: all 0.3s ease;
+    
     &:hover{
         opacity:0.7;
     }

@@ -6,6 +6,7 @@ export const Container = styled.div `
     background:#20295F;
     display:flex;
     border-bottom: 5px solid #ee6b26;
+    color:#20295F;
 `
 export const LeftSide = styled.div `
     width:50%;
@@ -68,5 +69,9 @@ export const RigthSide = styled.div `
         content:"|";
         padding: 0 10px;
         color:white;
+    }
+
+    button{
+        font-size: 16px;
     }
 `
